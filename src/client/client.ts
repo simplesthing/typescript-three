@@ -24,7 +24,7 @@ const controls = new OrbitControls(camera, renderer.domElement)
 controls.screenSpacePanning = true //so that panning up and down doesn't zoom in/out
 //controls.addEventListener('change', render)
 
-const planeGeometry: THREE.PlaneGeometry = new THREE.PlaneGeometry(3.6, 1.8)//, 360, 180)
+const planeGeometry: THREE.PlaneGeometry = new THREE.PlaneGeometry(3.6, 1.8, 360, 180)
 
 const material: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial()
 
@@ -99,12 +99,12 @@ meshPhongMaterialFolder.open()
 var planeData = {
     width: 3.6,
     height: 1.8,
-    widthSegments: 1,
-    heightSegments: 1
+    widthSegments: 360,
+    heightSegments: 180
 };
 const planePropertiesFolder = gui.addFolder("PlaneGeometry")
-planePropertiesFolder.add(planeData, 'width', 1, 30).onChange(regeneratePlaneGeometry)
-planePropertiesFolder.add(planeData, 'height', 1, 30).onChange(regeneratePlaneGeometry)
+//planePropertiesFolder.add(planeData, 'width', 1, 30).onChange(regeneratePlaneGeometry)
+//planePropertiesFolder.add(planeData, 'height', 1, 30).onChange(regeneratePlaneGeometry)
 planePropertiesFolder.add(planeData, 'widthSegments', 1, 360).onChange(regeneratePlaneGeometry)
 planePropertiesFolder.add(planeData, 'heightSegments', 1, 180).onChange(regeneratePlaneGeometry)
 planePropertiesFolder.open()
@@ -117,6 +117,13 @@ function regeneratePlaneGeometry() {
     plane.geometry = newGeometry
 }
 
+const textureFolder = gui.addFolder("Texture")
+textureFolder.add(texture.repeat, 'x', 0.1, 1, 0.1)
+textureFolder.add(texture.repeat, 'y', 0.1, 1, 0.1)
+textureFolder.add(texture.center, 'x', 0, 1, 0.001)
+textureFolder.add(texture.center, 'y', 0, 1, 0.001)
+
+// textureFolder.open()
 
 function updateMaterial() {
     material.side = Number(material.side)

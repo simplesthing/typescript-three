@@ -1,8 +1,7 @@
-import * as THREE from '/build/three.module.js'
-import { OrbitControls } from '/jsm/controls/OrbitControls'
-import Stats from '/jsm/libs/stats.module'
-import { GUI } from '/jsm/libs/dat.gui.module'
-
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import Stats from 'three/examples/jsm/libs/stats.module'
+import {GUI} from 'three/examples/jsm/libs/dat.gui.module'
 
 const scene: THREE.Scene = new THREE.Scene()
 
@@ -13,7 +12,6 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
 const controls = new OrbitControls(camera, renderer.domElement)
-controls.addEventListener('change', render) 
 
 const geometry: THREE.BoxGeometry = new THREE.BoxGeometry()
 const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true })
@@ -22,7 +20,6 @@ const cube: THREE.Mesh = new THREE.Mesh(geometry, material)
 scene.add(cube)
 
 camera.position.z = 2
-
 window.addEventListener('resize', onWindowResize, false)
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight
@@ -47,8 +44,7 @@ cameraFolder.open()
 var animate = function () {
     requestAnimationFrame(animate)
 
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    controls.update()
 
     render()
 
@@ -56,9 +52,6 @@ var animate = function () {
 };
 
 function render() {
-    stats.begin()
     renderer.render(scene, camera)
-    stats.end()
 }
-//render()
 animate();
